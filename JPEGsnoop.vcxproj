@@ -45,6 +45,7 @@
     <OutDir>Debug\</OutDir>
     <IntDir>Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(ProjectDir)source\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>Release\</OutDir>
@@ -68,7 +69,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>Wininet.lib</AdditionalDependencies>
+      <AdditionalDependencies>Wininet.lib;sqlite3.lib</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Midl>
@@ -114,6 +115,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\AboutDlg.cpp" />
+    <ClCompile Include="source\AviFile.cpp" />
     <ClCompile Include="source\BatchDlg.cpp" />
     <ClCompile Include="source\CntrItem.cpp" />
     <ClCompile Include="source\DbManageDlg.cpp" />
@@ -153,12 +155,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\TermsDlg.cpp" />
+    <ClCompile Include="source\tjpgd.cpp" />
     <ClCompile Include="source\UpdateAvailDlg.cpp" />
     <ClCompile Include="source\UrlString.cpp" />
     <ClCompile Include="source\WindowBuf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AboutDlg.h" />
+    <ClInclude Include="source\AviFile.h" />
     <ClInclude Include="source\BatchDlg.h" />
     <ClInclude Include="source\CntrItem.h" />
     <ClInclude Include="source\DbManageDlg.h" />
@@ -176,6 +180,7 @@
     <ClInclude Include="source\General.h" />
     <ClInclude Include="source\HyperlinkStatic.h" />
     <ClInclude Include="source\ImgDecode.h" />
+    <ClInclude Include="source\integer.h" />
     <ClInclude Include="source\JfifDecode.h" />
     <ClInclude Include="source\JPEGsnoop.h" />
     <ClInclude Include="source\JPEGsnoopCore.h" />
@@ -194,8 +199,11 @@
     <ClInclude Include="source\SettingsDlg.h" />
     <ClInclude Include="source\snoop.h" />
     <ClInclude Include="source\SnoopConfig.h" />
+    <ClInclude Include="source\sqlite3.h" />
+    <ClInclude Include="source\sqlite3ext.h" />
     <ClInclude Include="source\stdafx.h" />
     <ClInclude Include="source\TermsDlg.h" />
+    <ClInclude Include="source\tjpgd.h" />
     <ClInclude Include="source\UpdateAvailDlg.h" />
     <ClInclude Include="source\UrlString.h" />
     <ClInclude Include="source\WindowBuf.h" />

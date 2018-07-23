@@ -33,8 +33,7 @@
 
 #include "FolderDlg.h"
 #include "BatchDlg.h"
-
-
+#include "AviFile.h"
 #define DOCLOG_MAX_LINES 30000
 
 
@@ -107,7 +106,8 @@ public:
 	// Allocate the processing core
 	// - Public access by CJPEGsnoopViewImg
 	CJPEGsnoopCore* m_pCore;
-
+	BOOL			m_bAviIsChecking;       // todo: not use this variable
+	CAviFile       *m_pAviFile;
 public:
 
 	// Public accessors from CJPEGsnoopApp
@@ -125,7 +125,7 @@ public:
 						unsigned long nNum,bool bBool);
 	static void		CbWrap_I_LookupFilePosPix(void* pWrapClass,
 						unsigned int nX, unsigned int nY, unsigned int &nByte, unsigned int &nBit);
-
+	void            AviToolStatus_SetText(LPCTSTR strText);
 public:
 	void			DoGuiExtractEmbeddedJPEG();
 private:
@@ -170,6 +170,10 @@ private:
 	afx_msg void	OnUpdateScansegmentDetaileddecode(CCmdUI *pCmdUI);
 	afx_msg void	OnToolsExporttiff();
 	afx_msg void	OnUpdateToolsExporttiff(CCmdUI *pCmdUI);
+	afx_msg void    OnAvitoolCompletenesscheck();
+	afx_msg void    OnUpdateAvitoolCompletenesscheck(CCmdUI *pCmdUI);
+	afx_msg void    OnAvitoolStop();
+	afx_msg void    OnUpdateAvitoolStop(CCmdUI *pCmdUI);
 };
 
 

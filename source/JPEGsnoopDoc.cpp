@@ -96,6 +96,10 @@ BEGIN_MESSAGE_MAP(CJPEGsnoopDoc, CRichEditDoc)
 	ON_UPDATE_COMMAND_UI(ID_SCANSEGMENT_DETAILEDDECODE, OnUpdateScansegmentDetaileddecode)
 	ON_COMMAND(ID_TOOLS_EXPORTTIFF, OnToolsExporttiff)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_EXPORTTIFF, OnUpdateToolsExporttiff)
+	ON_COMMAND(ID_AVITOOL_COMPLETENESSCHECK, OnAvitoolCompletenesscheck)
+	ON_UPDATE_COMMAND_UI(ID_AVITOOL_COMPLETENESSCHECK, OnUpdateAvitoolCompletenesscheck)
+	ON_COMMAND(ID_AVITOOL_STOP, &CJPEGsnoopDoc::OnAvitoolStop)
+	ON_UPDATE_COMMAND_UI(ID_AVITOOL_STOP, &CJPEGsnoopDoc::OnUpdateAvitoolStop)
 END_MESSAGE_MAP()
 
 
@@ -135,6 +139,10 @@ CJPEGsnoopDoc::CJPEGsnoopDoc()
 	if (DEBUG_EN) m_pAppConfig->DebugLogAdd(_T("CJPEGsnoopDoc::CJPEGsnoopDoc() Checkpoint 5"));
 
 	if (DEBUG_EN) m_pAppConfig->DebugLogAdd(_T("CJPEGsnoopDoc::CJPEGsnoopDoc() End"));
+
+	m_pAviFile = nullptr;
+	m_bAviIsChecking = FALSE;
+
 }
 
 // Cleanup all of the allocated classes
@@ -935,14 +943,14 @@ void CJPEGsnoopDoc::OnToolsSearchreverse()
 //
 void CJPEGsnoopDoc::OnUpdateToolsSearchforward(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(m_pCore->IsAnalyzed());
+	pCmdUI->Enable(m_pCore->IsAnalyzed() && !m_bAviIsChecking);
 }
 
 // Menu enable status for Tools -> Search reverse
 //
 void CJPEGsnoopDoc::OnUpdateToolsSearchreverse(CCmdUI *pCmdUI)
 {
-	pCmdUI->Enable(m_pCore->IsAnalyzed());
+	pCmdUI->Enable(m_pCore->IsAnalyzed()  && !m_bAviIsChecking);
 }
 
 // Reprocess the current file
@@ -2197,6 +2205,70 @@ void CJPEGsnoopDoc::OnUpdateToolsExporttiff(CCmdUI *pCmdUI)
 	pCmdUI->Enable(m_pCore->IsAnalyzed());
 }
 
+struct param_s
+{
+	CJPEGsnoopDoc * pDoc;
+	CStatusBar* pStatBar;
+};
+
+UINT AFX_CDECL AviFileCompeltenessCheckThread( LPVOID lpParam ) 
+{
+	struct param_s * p_param = (struct param_s *)lpParam;
+	CJPEGsnoopDoc *pDoc  = p_param->pDoc;
+	CStatusBar *pStatBar = p_param->pStatBar;
+
+	pDoc->m_pAviFile = new CAviFile(glb_pDocLog,nullptr);
+	if(pDoc->m_pAviFile)
+	{
+		pDoc->m_bAviIsChecking = TRUE;
+		pDoc->m_pAviFile->SetStatusBar(pStatBar);
+		if(pDoc->m_pAviFile->LoadFile())
+		{
+			pDoc->m_pAviFile->CompletenessCheck();
+		}
+
+		pDoc->InsertQuickLog();
+		delete pDoc->m_pAviFile;
+		pDoc->m_pAviFile = nullptr;
+
+		pDoc->m_bAviIsChecking = FALSE;
+	}
+	
+	delete p_param;
+	return 0;
+}
+
+void CJPEGsnoopDoc::OnAvitoolCompletenesscheck()
+{
+	if(m_pAviFile)
+		return;
+
+	CWinThread *pWinThread = nullptr;
+
+	struct param_s * p_param = new struct param_s;
+	p_param->pDoc = this;
+	p_param->pStatBar = GetStatusBar();
+
+	pWinThread = AfxBeginThread(
+			AviFileCompeltenessCheckThread,// thread function name
+			(LPVOID)p_param    		       // argument to thread function 
+			);
+
+	if(pWinThread == nullptr)
+	{
+		CString strError;
+		strError.Format(_T("CreateThread error : %d"),GetLastError());
+		if (m_pAppConfig->bInteractive)
+			AfxMessageBox(strError);
+	}
+}
+
+void CJPEGsnoopDoc::OnUpdateAvitoolCompletenesscheck(CCmdUI *pCmdUI)
+{
+	bool bIsAvi = false,bIsMjpeg = false;
+	m_pCore->J_GetAviMode(bIsAvi,bIsMjpeg);
+	pCmdUI->Enable(m_pCore->IsAnalyzed() && bIsAvi && bIsMjpeg && !m_bAviIsChecking);
+}
 
 // -------------------------
 // Public accessors
@@ -2224,4 +2296,18 @@ void CJPEGsnoopDoc::I_GetPreviewSize(unsigned &nX,unsigned &nY)
 float CJPEGsnoopDoc::I_GetPreviewZoom()
 {
 	return m_pCore->I_GetPreviewZoom();
+}
+
+
+
+void CJPEGsnoopDoc::OnAvitoolStop()
+{
+	if(m_pAviFile)
+		m_pAviFile->Stop();
+}
+
+
+void CJPEGsnoopDoc::OnUpdateAvitoolStop(CCmdUI *pCmdUI)
+{
+	pCmdUI->Enable(m_bAviIsChecking);
 }

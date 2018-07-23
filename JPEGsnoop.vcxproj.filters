@@ -135,6 +135,12 @@
     <ClCompile Include="source\WindowBuf.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\AviFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\tjpgd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\AboutDlg.h">
@@ -258,6 +264,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\AviFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sqlite3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sqlite3ext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\tjpgd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\integer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

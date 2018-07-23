@@ -180,6 +180,12 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Add Camera/SW to DB...\tAlt+S", ID_TOOLS_ADDCAMERATODB
         MENUITEM "Manage Local DB...",          ID_TOOLS_MANAGELOCALDB
+        MENUITEM SEPARATOR
+        POPUP "AVI Tool..."
+        BEGIN
+            MENUITEM "Completeness Check\r\n",      ID_AVITOOL_COMPLETENESSCHECK
+            MENUITEM "Stop\tCtrl+B",                ID_AVITOOL_STOP
+        END
     END
     POPUP "&Options"
     BEGIN
@@ -275,6 +281,7 @@ BEGIN
     "2",            ID_PREVIEW_YCC,         VIRTKEY, ALT, NOINVERT
     "2",            ID_TOOLS_SEARCHFORWARD, VIRTKEY, CONTROL, NOINVERT
     "1",            ID_TOOLS_SEARCHREVERSE, VIRTKEY, CONTROL, NOINVERT
+    "B",            ID_AVITOOL_STOP,        VIRTKEY, CONTROL, NOINVERT
 END
 
 IDR_CNTR_INPLACE ACCELERATORS
@@ -1000,6 +1007,8 @@ STRINGTABLE
 BEGIN
     ID_OPTIONS_HIDEUKNOWNEXIFTAGS "Hide Unknown EXIF Tags\nEXIF Tags"
     ID_FILE_BATCHPROCESS    "Start batch processing"
+    ID_AVITOOL_COMPLETENESSCHECK "Parse AVI file,and check file validity"
+    ID_AVITOOL_STOP         "Stop checking"
 END
 
 #endif    // English (United States) resources

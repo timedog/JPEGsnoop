@@ -191,14 +191,17 @@
 #define ID_TOOLS_EXPORTTIFF             32884
 #define ID_FILE_BATCHPROCESS            32885
 #define ID_OPTIONS_RELAXEDPARSING       32886
+#define ID_TOOLS_AVITOOL                32887
+#define ID_AVITOOL_COMPLETENESSCHECK    32888
+#define ID_AVITOOL_STOP                 32890
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        147
-#define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1130
-#define _APS_NEXT_SYMED_VALUE           118
+#define _APS_NEXT_RESOURCE_VALUE        148
+#define _APS_NEXT_COMMAND_VALUE         32893
+#define _APS_NEXT_CONTROL_VALUE         1131
+#define _APS_NEXT_SYMED_VALUE           119
 #endif
 #endif
