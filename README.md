@@ -1,39 +1,14 @@
-# JPEGsnoop v1.8.0
+# JPEGsnoop-avitool v0.0.2
 
-<img align="right" src="http://www.impulseadventure.com/photo/images/jpegsnoop_prog.png">
+`avitool`是一款用于AVI（MJPG）文件解析的工具，它对整个文件的合法性进行检查，并收集信息存储在sqlite数据库中
 
-JPEGsnoop is a detailed JPEG image decoder and analysis tool.
-It reports all image metadata and can even help identify if an image has been edited.
+## 特性
+- AVI文件结构完整性检查
+- MJPG数据有效性检查，`avitool`通过解码每一帧MJPG来检查数据正确与否
+- INDEX数据有效性检查，检查各个字段正确性、MOVI段与INDEX是否有未对应的情况
+- 生成AVI文件结构的树状图
+- 记录AVI文件的信息到数据库中，方便后续分析（分析帧率变化、码率变化等）
 
-Official repository for JPEGsnoop: [JPEGsnoop @ GitHub](https://github.com/ImpulseAdventure/JPEGsnoop/)
-
-## Documentation & Downloads
-- More details and support are available: [JPEGsnoop - ImpulseAdventure.com](http://www.impulseadventure.com/photo/jpeg-snoop.html)
-- Windows binary can be downloaded at: [JPEGsnoop latest releases](https://github.com/ImpulseAdventure/JPEGsnoop/releases)
-
-<img align="right" src="http://www.impulseadventure.com/photo/images/jpegsnoop-04.jpg">
-
-## Features
-- Decode JPEG, AVI (MJPG), PSD images
-- MCU analysis with detailed decode
-- Extract embedded JPEG images
-- Detect edited images through compression signature analysis
-- Report all image metadata (EXIF)
-- Batch file processing
-- Compression signature detection
-- Recover corrupt JPEG image data
-- No installation required
-
-## Target System
-- Windows (MFC)
-- Compilation under Visual Studio (Visual C++)
-
-## License
-- JPEGsnoop is free for personal and commercial use per GNU General Public License version 2.0 (GPLv2)
-## Build  
- - project build  
-req: ms visual studio(c++) 2012  
-simple stuff
- - nmake  
- req: ms visual studio(c++) 2005  
- http://imageshack.com/i/pmym0PEnj
+## 快照
+<img src="https://github.com/timedog/JPEGsnoop/blob/JPEGSnoop-avitool/jpegsnoop-avitool-0.png">
+<img src="https://github.com/timedog/JPEGsnoop/blob/JPEGSnoop-avitool/jpegsnoop-avitool-1.png">
